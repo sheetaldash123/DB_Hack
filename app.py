@@ -24,8 +24,8 @@ def get_db():
 def login():
     name = request.args.get("name", "")
     # VULN: SQL injection (CWE-89)
-    query = "SELECT * FROM users WHERE name='" + name + "'"
-    rows = get_db().execute(query).fetchall()
+    query = "SELECT * FROM users WHERE name=?"
+    rows = get_db().execute(query, (name,)).fetchall()
     return {"authenticated": bool(rows), "rows": rows}
 
 
